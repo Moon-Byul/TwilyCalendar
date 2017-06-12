@@ -1,9 +1,9 @@
-package com.example.reveu.twilycalander;
+package com.example.reveu.twilycalendar;
 
 import java.util.Calendar;
 
 /**
- * Created by reveu on 2017-06-12..
+ * Created by reveu on 2017-06-12.
  */
 
 public class CalendarDayEvent

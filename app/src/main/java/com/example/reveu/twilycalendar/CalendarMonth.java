@@ -1,11 +1,9 @@
-package com.example.reveu.twilycalander;
+package com.example.reveu.twilycalendar;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Created by reveu on 2017-06-12..
+ * Created by reveu on 2017-06-12.
  */
 
 public class CalendarMonth extends LinearLayout

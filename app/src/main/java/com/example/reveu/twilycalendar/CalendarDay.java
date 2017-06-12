@@ -1,12 +1,7 @@
-package com.example.reveu.twilycalander;
+package com.example.reveu.twilycalendar;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,7 +9,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 /**
- * Created by reveu on 2017-06-12..
+ * Created by reveu on 2017-06-12.
  */
 
 public class CalendarDay extends LinearLayout

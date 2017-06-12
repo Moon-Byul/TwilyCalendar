@@ -1,4 +1,4 @@
-package com.example.reveu.twilycalander;
+package com.example.reveu.twilycalendar;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 /**
- * Created by reveu on 2017-06-12..
+ * Created by reveu on 2017-06-12.
  */
 
 public class CalendarMain extends AppCompatActivity
