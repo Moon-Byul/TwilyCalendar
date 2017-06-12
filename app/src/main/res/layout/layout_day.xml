@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    tools:context="com.example.reveu.twilycalander.CalendarDay">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#44000000">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/day_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="2"
+        android:textSize="22sp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/day_point"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="●"
+        android:textSize="15sp"
+        android:layout_marginBottom="8dp"
+        android:textColor="#55000000" />
+
+</LinearLayout>
