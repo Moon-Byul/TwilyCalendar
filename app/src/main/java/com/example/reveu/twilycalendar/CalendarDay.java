@@ -1,12 +1,21 @@
 package com.example.reveu.twilycalendar;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
+
+import static android.view.Gravity.CENTER;
 
 /**
  * Created by reveu on 2017-06-12.
@@ -69,12 +78,33 @@ public class CalendarDay extends LinearLayout
         return isVisible;
     }
 
+    public void setTvNumSize(int width, int height)
+    {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
+        params.gravity = Gravity.CENTER;
+        tvDayNumber.setLayoutParams(params);
+    }
+
     public void setPointed(boolean pointed)
     {
         if(pointed)
             tvDayPoint.setVisibility(VISIBLE);
         else
             tvDayPoint.setVisibility(INVISIBLE);
+    }
+
+    public void setBackgroundTextView(@android.support.annotation.DrawableRes int resId)
+    {
+        tvDayNumber.setBackgroundResource(resId);
+        if(resId != 0)
+            tvDayNumber.setTextColor(Color.rgb(255, 255, 255));
+        else
+            tvDayNumber.setTextColor(Color.rgb(0, 0, 0));
+
+        if(resId == R.drawable.rounded_day)
+            tvDayNumber.setAlpha(0.7f);
+        else
+            tvDayNumber.setAlpha(1.0f);
     }
 
     public void setTextDayColor(int rgb)
@@ -86,5 +116,11 @@ public class CalendarDay extends LinearLayout
     {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         tvDayNumber.setText(String.valueOf(day));
+    }
+
+    public int getDensityPx(int value)
+    {
+        float scale = getResources().getDisplayMetrics().density;
+        return (int) (value * scale);
     }
 }

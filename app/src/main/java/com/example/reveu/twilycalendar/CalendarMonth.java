@@ -3,6 +3,7 @@ package com.example.reveu.twilycalendar;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,8 @@ public class CalendarMonth extends LinearLayout
     private int year;
     private int month;
 
+    private int tvDp;
+
     public CalendarMonth(Context context)
     {
         this(context, null);
@@ -38,7 +41,6 @@ public class CalendarMonth extends LinearLayout
 
         if(weeks == null)
         {
-
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.weight = 0;
 
@@ -78,6 +80,11 @@ public class CalendarMonth extends LinearLayout
         }
     }
 
+    public void makeCalendar()
+    {
+        makeCalendar(year, month);
+    }
+
     public void makeCalendar(int year, int month)
     {
         this.year = year;
@@ -99,6 +106,7 @@ public class CalendarMonth extends LinearLayout
         }
 
         //달력 위에 n월 텍스트뷰를 넣으려함
+        showMonth.removeAllViews();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         params.weight = 1;
         params.setMargins(getDensityPx(5), getDensityPx(5), getDensityPx(5), getDensityPx(5));
@@ -110,9 +118,13 @@ public class CalendarMonth extends LinearLayout
             {
                 tvTemp.setVisibility(VISIBLE);
                 tvTemp.setGravity(Gravity.CENTER);
-                tvTemp.setText(month + "월");
-                tvTemp.setTextColor(Color.rgb(0, 0, 0));
+                tvTemp.setText(month+1 + "월");
+                if(month == Calendar.getInstance().get(Calendar.MONTH))
+                    tvTemp.setTextColor(Color.rgb(255, 0, 0));
+                else
+                    tvTemp.setTextColor(Color.rgb(0, 0, 0));
                 tvTemp.setTextSize(20.0f);
+
                 tvShowMonth = tvTemp;
             }
             else
@@ -124,9 +136,18 @@ public class CalendarMonth extends LinearLayout
 
         for(i = seekDay; i < maxOfMonth + seekDay; i++)
         {
-            cal.set(year, month, i-seekDay + 1); // i-seekDay하면 -1된 상태로 오길래 +1 처리했음.
+            int day = i-seekDay + 1; // i-seekDay하면 -1된 상태로 오길래 +1 처리했음.
+
+            cal.set(year, month, day);
+            days.get(i).setVisible(true);
             days.get(i).setDay(cal);
-            days.get(i).setPointed(false); //나중에 해당 일에 이벤트 있으면 true로 처리한다.
+            days.get(i).setPointed(true); //나중에 해당 일에 이벤트 있으면 true로 처리한다.
+            days.get(i).setTvNumSize(tvDp, tvDp);
+
+            if(dateisToday(cal, Calendar.getInstance()))
+                days.get(i).setBackgroundTextView(R.drawable.rounded_day);
+            else
+                days.get(i).setBackgroundTextView(0);
 
             // 주말은 살짝 흐리게한다.
             if(i % 7 == 0 || i % 7 == 6)
@@ -139,6 +160,19 @@ public class CalendarMonth extends LinearLayout
             days.get(i).setVisible(false);
         }
 
+    }
+
+    public void setShowMonthVisible(boolean visible)
+    {
+        if(visible)
+            showMonth.setVisibility(GONE);
+        else
+            showMonth.setVisibility(VISIBLE);
+    }
+
+    public void setTvDp(int dp)
+    {
+        tvDp = dp;
     }
 
     public int getYear()
@@ -158,6 +192,14 @@ public class CalendarMonth extends LinearLayout
     {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (value * scale);
+    }
+
+    private boolean dateisToday(Calendar cal1, Calendar cal2)
+    {
+        if(cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH))
+            return true;
+        else
+            return false;
     }
 
     /*
