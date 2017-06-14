@@ -1,122 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
 
-    <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2017년"
+        android:textSize="28sp"
+        android:textColor="#000000"/>
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#44000000"
+        android:paddingBottom="5dp">
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+    </LinearLayout>
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <!--</LinearLayout>-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
+            <include
+                android:id="@+id/month_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="2dp"
+                layout="@layout/layout_month" />
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+            <include
+                android:id="@+id/month_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="2dp"
+                layout="@layout/layout_month" />
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+            <include
+                android:id="@+id/month_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="2dp"
+                layout="@layout/layout_month" />
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+        </LinearLayout>
 
-    <!--</LinearLayout>-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
+        </LinearLayout>
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+        </LinearLayout>
 
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-    <!--</LinearLayout>-->
+        </LinearLayout>
 
-    <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1">-->
-
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
-
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
-
-        <!--<include-->
-            <!--android:id="@+id/month_third"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--layout="@layout/layout_month" />-->
-
-    <!--</LinearLayout>-->
-
+    </LinearLayout>
 </LinearLayout>
