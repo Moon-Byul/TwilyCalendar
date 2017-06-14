@@ -2,6 +2,9 @@ package com.example.reveu.twilycalendar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -145,7 +148,9 @@ public class CalendarMonth extends LinearLayout
             days.get(i).setTvNumSize(tvDp, tvDp);
 
             if(dateisToday(cal, Calendar.getInstance()))
+            {
                 days.get(i).setBackgroundTextView(R.drawable.rounded_day);
+            }
             else
                 days.get(i).setBackgroundTextView(0);
 

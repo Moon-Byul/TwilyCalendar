@@ -28,7 +28,7 @@
         android:id="@+id/day_point"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="top|center"
         android:text="●"
         android:textSize="16sp"
         android:textColor="#55000000"

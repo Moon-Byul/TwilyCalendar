@@ -1,6 +1,8 @@
 package com.example.reveu.twilycalendar;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -31,7 +33,7 @@ public class CalendarMonthInYear extends LinearLayout
     {
         super(context, attrs);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         this.context = context;
         this.setOrientation(LinearLayout.VERTICAL);
@@ -41,19 +43,25 @@ public class CalendarMonthInYear extends LinearLayout
         {
             showMonth = new AutoResizeTextView(context); // 월을 표시하기 위한 레이아웃
 
-            params.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             params.setMargins(getDensityPx(2), getDensityPx(2), getDensityPx(2), getDensityPx(2));
+            params.weight = 3.5f;
+            showMonth.setTextSize(100.0f);
             showMonth.setLayoutParams(params);
-            showMonth.setTextSize(58.0f);
             this.addView(showMonth);
 
             weeks = new ArrayList<LinearLayout>(6); // 한달에 최대 6주
             days = new ArrayList<AutoResizeTextView>(42); // 7일 * 6주 = 42일
 
+            LinearLayout tempMainLayout = new LinearLayout(context);
             LinearLayout tempLayout = null;
-            params.height = LinearLayout.LayoutParams.MATCH_PARENT;
+
+            params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
             params.setMargins(0,0,0,0);
-            params.weight = 1;
+            params.weight = 1f;
+            tempMainLayout.setOrientation(LinearLayout.VERTICAL);
+            tempMainLayout.setLayoutParams(params);
+            this.addView(tempMainLayout);
 
             for(int i=0; i<42; i++)
             {
@@ -64,12 +72,12 @@ public class CalendarMonthInYear extends LinearLayout
                     tempLayout.setOrientation(LinearLayout.HORIZONTAL);
                     tempLayout.setLayoutParams(params);
                     weeks.add(tempLayout);
-                    this.addView(tempLayout);
+                    tempMainLayout.addView(tempLayout);
                 }
 
                 AutoResizeTextView day = new AutoResizeTextView(context);
                 day.setGravity(Gravity.CENTER);
-                day.setTextSize(36.0f);
+                day.setTextSize(48.0f);
                 day.setLayoutParams(params);
 
                 tempLayout.addView(day);
@@ -92,6 +100,8 @@ public class CalendarMonthInYear extends LinearLayout
 
         int seekDay, i;
 
+        showMonth.setText(month+1 + "월");
+
         // 첫번째 주 설정, dayOfWeek이 1부터 시작되서 -1 해줬음...
         for(seekDay = 0; seekDay<dayOfWeek-1; seekDay++)
         {
@@ -105,12 +115,18 @@ public class CalendarMonthInYear extends LinearLayout
             cal.set(year, month, day);
 
             days.get(i).setVisibility(VISIBLE);
-            days.get(i).setText(day);
+            days.get(i).setText(String.valueOf(day));
 
             if(dateisToday(cal, Calendar.getInstance()))
-                days.get(i).setBackgroundResource(R.drawable.rounded_day);
+            {
+                days.get(i).setTextColor(Color.rgb(255, 0, 0));
+                days.get(i).setPaintFlags(days.get(i).getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
+            }
             else
-                days.get(i).setBackgroundResource(0);
+            {
+                days.get(i).setTextColor(Color.rgb(0, 0, 0));
+                days.get(i).setPaintFlags(days.get(i).getPaintFlags() &~ Paint.FAKE_BOLD_TEXT_FLAG);
+            }
         }
 
         // 나머지 일은 안보이게 처리

@@ -51,12 +51,12 @@ public class FragCalendarMonth extends Fragment
     {
         if(visiblity)
         {
-            adapter.changeDp(getDensityPx(28));
+            adapter.changeDp(getDensityPx(32));
             lvEventMonth.setVisibility(VISIBLE);
         }
         else
         {
-            adapter.changeDp(getDensityPx(34));
+            adapter.changeDp(getDensityPx(38));
             lvEventMonth.setVisibility(GONE);
         }
     }

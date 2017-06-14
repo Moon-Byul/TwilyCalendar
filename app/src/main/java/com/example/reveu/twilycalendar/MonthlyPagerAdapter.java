@@ -48,6 +48,7 @@ public class MonthlyPagerAdapter extends PagerAdapter
     {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, 1);
+        Log.d("Twily", "Pos : " + (BASE_POSITION + howFarFromBase(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH))));
         return BASE_POSITION + howFarFromBase(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
     }
 

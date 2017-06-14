@@ -19,6 +19,11 @@ public class FragCalendarYear extends Fragment
     {
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_calendar_year, container, false);
 
+        CalendarYear temp = new CalendarYear(getContext());
+        temp.makeCalendar(2017);
+
+        rootView.addView(temp);
+
         return rootView;
     }
 }
