@@ -3,9 +3,12 @@ package com.example.reveu.twilycalendar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.Calendar;
@@ -17,34 +20,87 @@ import static android.view.View.VISIBLE;
  * Created by reveu on 2017-06-14.
  */
 
-public class FragCalendarMonth extends Fragment
+public class FragCalendarMonth extends Fragment implements ViewPager.OnPageChangeListener
 {
+    private int currentYear;
+    private int currentMonth;
     private ListView lvEventMonth;
     private VerticalViewPager vrvpCalMonth;
     private MonthlyPagerAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        int year, month;
-        Calendar cal = Calendar.getInstance();
-
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_calendar_month, container, false);
 
-        year = cal.get(Calendar.YEAR);
-        month = cal.get(Calendar.MONTH);
+        if(currentYear == 0 && currentMonth == 0)
+        {
+            Calendar cal = Calendar.getInstance();
 
-        vrvpCalMonth = (VerticalViewPager) rootView.findViewById(R.id.vrvpCalMonth);
-        lvEventMonth = (ListView) rootView.findViewById(R.id.lvEventMonth);
-        adapter = new MonthlyPagerAdapter(rootView.getContext(), year, month);
+            currentYear = cal.get(Calendar.YEAR);
+            currentMonth = cal.get(Calendar.MONTH);
+        }
 
-        setListViewVisiblity(false);
+        vrvpCalMonth = new VerticalViewPager(getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.weight = 1.0f;
+        vrvpCalMonth.setLayoutParams(params);
+
+        lvEventMonth = new ListView(getContext());
+        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        params.weight = 2.0f;
+        lvEventMonth.setLayoutParams(params);
+
+        rootView.addView(vrvpCalMonth);
+        rootView.addView(lvEventMonth);
+
+        adapter = new MonthlyPagerAdapter(rootView.getContext(), currentYear, currentMonth);
+
+        setListViewVisiblity(((CalendarMain) getActivity()).getLvVisible());
 
         vrvpCalMonth.setAdapter(adapter);
-        vrvpCalMonth.setCurrentItem(adapter.getPosition(year, month));
+        vrvpCalMonth.setCurrentItem(adapter.getPosition(currentYear, currentMonth));
         vrvpCalMonth.setOffscreenPageLimit(1);
+        vrvpCalMonth.setOnPageChangeListener(this);
 
         return rootView;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+    @Override
+    public void onPageSelected(int position) {}
+
+    @Override
+    public void onPageScrollStateChanged(int state)
+    {
+        int base = adapter.getCount()/2;
+        Calendar cal = adapter.getBaseCal();
+        cal.add(Calendar.MONTH, vrvpCalMonth.getCurrentItem() - base);
+        if(state == 0)
+        {
+            currentMonth = cal.get(Calendar.MONTH);
+            for(int i=0; i<adapter.PAGES; i++)
+            {
+                if(adapter.monthViews[i].getYear() > 0)
+                {
+                    if (adapter.monthViews[i].getYear() != currentYear || adapter.monthViews[i].getMonth() != currentMonth)
+                    {
+                        adapter.monthViews[i].setSelectDay(0);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (currentYear != cal.get(Calendar.YEAR))
+            {
+                currentYear = cal.get(Calendar.YEAR);
+                ((CalendarMain) getActivity()).setActionBarYearText(currentYear);
+            }
+        }
     }
 
     public void setListViewVisiblity(boolean visiblity)
@@ -68,5 +124,25 @@ public class FragCalendarMonth extends Fragment
     {
         float scale = getResources().getDisplayMetrics().density;
         return (int) (value * scale);
+    }
+
+    public int getYear()
+    {
+        return currentYear;
+    }
+
+    public int getMonth()
+    {
+        return currentMonth;
+    }
+
+    public void setYear(int year)
+    {
+        this.currentYear = year;
+    }
+
+    public void setMonth(int month)
+    {
+        this.currentMonth = month;
     }
 }

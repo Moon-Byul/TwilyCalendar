@@ -19,7 +19,7 @@ import static android.support.v7.widget.AppCompatDrawableManager.get;
 public class MonthlyPagerAdapter extends PagerAdapter
 {
     private Context context;
-    private CalendarMonth[] monthViews;
+    CalendarMonth[] monthViews;
 
     final int baseYear;
     final int baseMonth;
@@ -48,7 +48,6 @@ public class MonthlyPagerAdapter extends PagerAdapter
     {
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, 1);
-        Log.d("Twily", "Pos : " + (BASE_POSITION + howFarFromBase(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH))));
         return BASE_POSITION + howFarFromBase(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH));
     }
 
@@ -72,8 +71,6 @@ public class MonthlyPagerAdapter extends PagerAdapter
     @Override
     public Object instantiateItem(ViewGroup container, int position)
     {
-        Log.d("Twily", "instantiate : " + position);
-
         int howFarFromBase = position - BASE_POSITION;
         Calendar cal = (Calendar) baseCal.clone();
         cal.add(Calendar.MONTH, howFarFromBase);
@@ -103,5 +100,10 @@ public class MonthlyPagerAdapter extends PagerAdapter
     public boolean isViewFromObject(View view, Object object)
     {
         return view == object;
+    }
+
+    public Calendar getBaseCal()
+    {
+        return (Calendar) baseCal.clone();
     }
 }

@@ -13,18 +13,11 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/fragCalMonth"
+            android:id="@+id/fragCal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.example.reveu.twilycalendar.FragCalendarMonth"
             tools:layout="@layout/fragment_calendar_month" />
-
-        <!--<fragment-->
-            <!--android:id="@+id/fragCalYear"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:name="com.example.reveu.twilycalendar.FragCalendarYear"-->
-            <!--tools:layout="@layout/fragment_calendar_year" />-->
 
     </RelativeLayout>
 </LinearLayout>

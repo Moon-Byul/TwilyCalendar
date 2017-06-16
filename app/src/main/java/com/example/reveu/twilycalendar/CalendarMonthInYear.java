@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +19,7 @@ public class CalendarMonthInYear extends LinearLayout
 {
     private Context context;
     private ArrayList<LinearLayout> weeks;
-    private ArrayList<AutoResizeTextView> days;
+    private ArrayList<TextView> days;
     private AutoResizeTextView showMonth;
 
     private int year;
@@ -51,7 +52,7 @@ public class CalendarMonthInYear extends LinearLayout
             this.addView(showMonth);
 
             weeks = new ArrayList<LinearLayout>(6); // 한달에 최대 6주
-            days = new ArrayList<AutoResizeTextView>(42); // 7일 * 6주 = 42일
+            days = new ArrayList<TextView>(42); // 7일 * 6주 = 42일
 
             LinearLayout tempMainLayout = new LinearLayout(context);
             LinearLayout tempLayout = null;
@@ -68,6 +69,10 @@ public class CalendarMonthInYear extends LinearLayout
                 //week의 layout을 생성한다.
                 if(i % 7 == 0)
                 {
+                    params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                    params.setMargins(0,0,0,0);
+                    params.weight = 1f;
+
                     tempLayout = new LinearLayout(context);
                     tempLayout.setOrientation(LinearLayout.HORIZONTAL);
                     tempLayout.setLayoutParams(params);
@@ -75,9 +80,13 @@ public class CalendarMonthInYear extends LinearLayout
                     tempMainLayout.addView(tempLayout);
                 }
 
-                AutoResizeTextView day = new AutoResizeTextView(context);
+                params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.setMargins(0,0,0,0);
+                params.weight = 1f;
+
+                TextView day = new TextView(context);
                 day.setGravity(Gravity.CENTER);
-                day.setTextSize(48.0f);
+                day.setTextSize(10.0f);
                 day.setLayoutParams(params);
 
                 tempLayout.addView(day);
@@ -149,7 +158,7 @@ public class CalendarMonthInYear extends LinearLayout
 
     private boolean dateisToday(Calendar cal1, Calendar cal2)
     {
-        if(cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH))
+        if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH))
             return true;
         else
             return false;

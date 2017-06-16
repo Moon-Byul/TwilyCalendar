@@ -8,6 +8,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ public class CalendarMonth extends LinearLayout
     private LinearLayout showMonth;
     private TextView tvShowMonth;
 
+    private int selectDay;
+    private int seekDay;
     private int year;
     private int month;
 
@@ -93,6 +96,8 @@ public class CalendarMonth extends LinearLayout
         this.year = year;
         this.month = month;
 
+        selectDay = 0;
+
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, 1);
         cal.setFirstDayOfWeek(Calendar.SUNDAY); // 일요일을 주의 시작일로 지정
@@ -100,7 +105,7 @@ public class CalendarMonth extends LinearLayout
         int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK); // 1일의 요일
         int maxOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH); // 마지막 일수
 
-        int seekDay, i;
+        int i;
 
         // 첫번째 주 설정, dayOfWeek이 1부터 시작되서 -1 해줬음...
         for(seekDay = 0; seekDay<dayOfWeek-1; seekDay++)
@@ -122,7 +127,7 @@ public class CalendarMonth extends LinearLayout
                 tvTemp.setVisibility(VISIBLE);
                 tvTemp.setGravity(Gravity.CENTER);
                 tvTemp.setText(month+1 + "월");
-                if(month == Calendar.getInstance().get(Calendar.MONTH))
+                if(year == Calendar.getInstance().get(Calendar.YEAR) && month == Calendar.getInstance().get(Calendar.MONTH))
                     tvTemp.setTextColor(Color.rgb(255, 0, 0));
                 else
                     tvTemp.setTextColor(Color.rgb(0, 0, 0));
@@ -139,7 +144,7 @@ public class CalendarMonth extends LinearLayout
 
         for(i = seekDay; i < maxOfMonth + seekDay; i++)
         {
-            int day = i-seekDay + 1; // i-seekDay하면 -1된 상태로 오길래 +1 처리했음.
+            final int day = i-seekDay + 1; // i-seekDay하면 -1된 상태로 오길래 +1 처리했음.
 
             cal.set(year, month, day);
             days.get(i).setVisible(true);
@@ -148,11 +153,18 @@ public class CalendarMonth extends LinearLayout
             days.get(i).setTvNumSize(tvDp, tvDp);
 
             if(dateisToday(cal, Calendar.getInstance()))
-            {
-                days.get(i).setBackgroundTextView(R.drawable.rounded_day);
-            }
+                setSelectDay(day);
             else
-                days.get(i).setBackgroundTextView(0);
+                days.get(i).setBackgroundTextView(0, false);
+
+            days.get(i).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    setSelectDay(day);
+                }
+            });
 
             // 주말은 살짝 흐리게한다.
             if(i % 7 == 0 || i % 7 == 6)
@@ -165,6 +177,29 @@ public class CalendarMonth extends LinearLayout
             days.get(i).setVisible(false);
         }
 
+    }
+
+    final public void setSelectDay(int day)
+    {
+        Calendar cal = Calendar.getInstance();
+        int seekDayTemp = seekDay - 1;
+
+        if(selectDay > 0)
+            days.get(seekDayTemp + selectDay).setBackgroundTextView(0, false);
+
+        if(day == 0 && cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month)
+        {
+            day = cal.get(Calendar.DAY_OF_MONTH);
+        }
+
+        if(day > 0)
+        {
+            cal.set(year, month, day);
+
+            days.get(seekDayTemp + day).setBackgroundTextView(R.drawable.rounded_day, dateisToday(cal, Calendar.getInstance()));
+        }
+
+        selectDay = day;
     }
 
     public void setShowMonthVisible(boolean visible)
@@ -201,7 +236,7 @@ public class CalendarMonth extends LinearLayout
 
     private boolean dateisToday(Calendar cal1, Calendar cal2)
     {
-        if(cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH))
+        if(cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) && cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH))
             return true;
         else
             return false;

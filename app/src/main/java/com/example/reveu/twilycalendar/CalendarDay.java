@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
@@ -93,15 +94,25 @@ public class CalendarDay extends LinearLayout
             tvDayPoint.setVisibility(INVISIBLE);
     }
 
-    public void setBackgroundTextView(@android.support.annotation.DrawableRes int resId)
+    public void setBackgroundTextView(@android.support.annotation.DrawableRes int resId, boolean isToday)
     {
         tvDayNumber.setBackgroundResource(resId);
+
+        if(isToday)
+        {
+            tvDayNumber.getBackground().setColorFilter(Color.argb(255, 255, 0, 0), PorterDuff.Mode.SRC_ATOP);
+        }
+        else if(resId != 0)
+        {
+            tvDayNumber.getBackground().setColorFilter(Color.argb(255, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+        }
+
         if(resId != 0)
             tvDayNumber.setTextColor(Color.rgb(255, 255, 255));
         else
             tvDayNumber.setTextColor(Color.rgb(0, 0, 0));
 
-        if(resId == R.drawable.rounded_day)
+        if(resId == R.drawable.rounded_day && isToday)
             tvDayNumber.setAlpha(0.7f);
         else
             tvDayNumber.setAlpha(1.0f);

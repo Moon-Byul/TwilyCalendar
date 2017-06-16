@@ -3,7 +3,10 @@ package com.example.reveu.twilycalendar;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -33,7 +36,6 @@ public class CalendarYear extends LinearLayout
         super(context, attrs);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
         this.context = context;
         this.setOrientation(LinearLayout.VERTICAL);
         this.setPadding(getDensityPx(5), getDensityPx(5), getDensityPx(5), getDensityPx(5));
@@ -43,7 +45,7 @@ public class CalendarYear extends LinearLayout
         {
             showYear = new TextView(context); // 년도를 표시하기 위한 레이아웃
             params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 0, getDensityPx(5));
+            params.setMargins(getDensityPx(10), 0, getDensityPx(10), getDensityPx(5));
             showYear.setTextSize(28.0f);
             showYear.setLayoutParams(params);
             showYear.setTextColor(Color.rgb(0, 0, 0));
@@ -52,6 +54,7 @@ public class CalendarYear extends LinearLayout
 
             LinearLayout tempLayout = new LinearLayout(context); // 선 표시하는 용도의 레이아웃
             params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 2);
+            params.setMargins(getDensityPx(10), 0, getDensityPx(10), 0);
             tempLayout.setLayoutParams(params);
             tempLayout.setOrientation(VERTICAL);
             tempLayout.setBackgroundColor(Color.argb(68, 0, 0, 0));
@@ -71,6 +74,9 @@ public class CalendarYear extends LinearLayout
 
             params.weight = 1;
 
+            TypedValue outValue = new TypedValue();
+            getContext().getTheme().resolveAttribute(R.attr.selectableItemBackgroundBorderless, outValue, true);
+
             for(int i=0; i<12; i++)
             {
                 //month의 layout을 생성한다.
@@ -87,6 +93,7 @@ public class CalendarYear extends LinearLayout
                 CalendarMonthInYear month = new CalendarMonthInYear(context);
                 params.setMargins(getDensityPx(3), getDensityPx(3), getDensityPx(3), getDensityPx(3));
                 month.setLayoutParams(params);
+                month.setBackgroundResource(outValue.resourceId);
 
                 tempLayout.addView(month);
                 months.add(month);
@@ -99,9 +106,19 @@ public class CalendarYear extends LinearLayout
         this.year = year;
 
         showYear.setText(year + "년");
+
         for(int i=0; i<12; i++)
         {
+            final int index = i;
             months.get(i).makeCalendar(year, i);
+            months.get(i).setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    ((CalendarMain) context).changeFragment(months.get(index).getYear(), months.get(index).getMonth());
+                }
+            });
         }
     }
 
